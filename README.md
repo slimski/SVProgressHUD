@@ -26,7 +26,7 @@ pod 'SVProgressHUD+kern'
 If you want to use the latest features of `SVProgressHUD` use normal external source dependencies.
 
 ```ruby
-pod 'SVProgressHUD', :git => 'https://github.com/slimski/SVProgressHUD/SVProgressHUD.git'
+pod 'SVProgressHUD+kern', :git => 'https://github.com/slimski/SVProgressHUD.git'
 ```
 
 This pulls from the `master` branch directly.
