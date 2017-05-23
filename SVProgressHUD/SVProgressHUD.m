@@ -216,6 +216,10 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 + (void)setHapticsEnabled:(BOOL)hapticsEnabled {
     [self sharedView].hapticsEnabled = hapticsEnabled;
 }
+    
++ (void)setTextKern:(CGFloat)kern {
+    [self sharedView].textKern = kern;
+}
 
 #pragma mark - Show Methods
 
@@ -581,7 +585,15 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 }
 
 - (void)setStatus:(NSString*)status {
-    self.statusLabel.text = status;
+    if (self.textKern > 0) {
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:status];
+        [attributedString addAttribute:NSKernAttributeName
+                                 value:@(self.textKern)
+                                 range:NSMakeRange(0, [status length])];
+        [self.statusLabel setAttributedText:attributedString];
+    } else {
+        self.statusLabel.text = status;
+    }
     [self updateHUDFrame];
 }
 
@@ -783,7 +795,17 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
             strongSelf.fadeOutTimer = nil;
             
             // Update text and set progress to the given value
-            strongSelf.statusLabel.text = status;
+            if (strongSelf.textKern > 0) {
+                NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:status];
+                [attributedString addAttribute:NSKernAttributeName
+                                         value:@(strongSelf.textKern)
+                                         range:NSMakeRange(0, [status length])];
+                [strongSelf.statusLabel setAttributedText:attributedString];
+            } else {
+                strongSelf.statusLabel.text = status;
+            }
+
+
             strongSelf.progress = progress;
             
             // Choose the "right" indicator depending on the progress
