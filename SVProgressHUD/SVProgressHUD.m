@@ -586,10 +586,18 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 - (void)setStatus:(NSString*)status {
     if (self.textKern > 0) {
+        NSRange range = NSMakeRange(0, status.length);
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:status];
         [attributedString addAttribute:NSKernAttributeName
                                  value:@(self.textKern)
-                                 range:NSMakeRange(0, [status length])];
+                                 range:range];
+        [attributedString addAttribute:NSFontAttributeName
+                                 value:self.font
+                                 range:range];
+        [attributedString addAttribute:NSForegroundColorAttributeName
+                                 value:self.foregroundColor
+                                 range:range];
+
         [self.statusLabel setAttributedText:attributedString];
     } else {
         self.statusLabel.text = status;
@@ -797,9 +805,17 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
             // Update text and set progress to the given value
             if (strongSelf.textKern > 0) {
                 NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:status];
+                NSRange range = NSMakeRange(0, [status length]);
                 [attributedString addAttribute:NSKernAttributeName
                                          value:@(strongSelf.textKern)
-                                         range:NSMakeRange(0, [status length])];
+                                         range:range];
+                [attributedString addAttribute:NSFontAttributeName
+                                         value:strongSelf.font
+                                         range:range];
+                [attributedString addAttribute:NSForegroundColorAttributeName
+                                         value:strongSelf.foregroundColor
+                                         range:range];
+                
                 [strongSelf.statusLabel setAttributedText:attributedString];
             } else {
                 strongSelf.statusLabel.text = status;
