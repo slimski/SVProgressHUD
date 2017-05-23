@@ -33,6 +33,7 @@ static const CGFloat SVProgressHUDDefaultAnimationDuration = 0.15f;
 static const CGFloat SVProgressHUDVerticalSpacing = 12.0f;
 static const CGFloat SVProgressHUDHorizontalSpacing = 12.0f;
 static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
+static const CGFloat SVProgressHUDLabelKern = 1.0f;
 
 
 @interface SVProgressHUD ()
@@ -432,6 +433,8 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         
         _minimumDismissTimeInterval = 5.0;
         _maximumDismissTimeInterval = CGFLOAT_MAX;
+        
+        _textKern = SVProgressHUDLabelKern;
 
         _fadeInAnimationDuration = SVProgressHUDDefaultAnimationDuration;
         _fadeOutAnimationDuration = SVProgressHUDDefaultAnimationDuration;
@@ -464,7 +467,8 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         CGSize constraintSize = CGSizeMake(200.0f, 300.0f);
         labelRect = [self.statusLabel.text boundingRectWithSize:constraintSize
                                                         options:(NSStringDrawingOptions)(NSStringDrawingUsesFontLeading | NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin)
-                                                     attributes:@{NSFontAttributeName: self.statusLabel.font}
+                                                     attributes:@{NSFontAttributeName: self.statusLabel.font,
+                                                                  NSKernAttributeName: @(self.textKern)}
                                                         context:NULL];
         labelHeight = ceilf(CGRectGetHeight(labelRect));
         labelWidth = ceilf(CGRectGetWidth(labelRect));
@@ -585,7 +589,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 }
 
 - (void)setStatus:(NSString*)status {
-    if (self.textKern > 0) {
+    if (self.textKern != SVProgressHUDLabelKern) {
         NSRange range = NSMakeRange(0, status.length);
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:status];
         [attributedString addAttribute:NSKernAttributeName
@@ -803,7 +807,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
             strongSelf.fadeOutTimer = nil;
             
             // Update text and set progress to the given value
-            if (strongSelf.textKern > 0) {
+            if (strongSelf.textKern != SVProgressHUDLabelKern) {
                 NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:status];
                 NSRange range = NSMakeRange(0, [status length]);
                 [attributedString addAttribute:NSKernAttributeName
