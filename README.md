@@ -20,13 +20,13 @@ Try `SVProgressHUD` on [Appetize.io](https://appetize.io/app/p8r2cvy8kq74x7q7tjq
 [CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like `SVProgressHUD` in your projects. First, add the following line to your [Podfile](http://guides.cocoapods.org/using/using-cocoapods.html):
 
 ```ruby
-pod 'SVProgressHUD'
+pod 'SVProgressHUD+kern'
 ```
 
 If you want to use the latest features of `SVProgressHUD` use normal external source dependencies.
 
 ```ruby
-pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
+pod 'SVProgressHUD', :git => 'https://github.com/slimski/SVProgressHUD/SVProgressHUD.git'
 ```
 
 This pulls from the `master` branch directly.
@@ -42,7 +42,7 @@ pod install
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks. To integrate `SVProgressHUD` into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "SVProgressHUD/SVProgressHUD"
+github "slimski/SVProgressHUD"
 ```
 
 Run `carthage update` to build the framework and drag the built `SVProgressHUD.framework` (in Carthage/Build/iOS folder) into your Xcode project (Linked Frameworks and Libraries in `Targets`).
